@@ -1,0 +1,42 @@
+.blob-panel {
+    width: 141px;
+    height: 43px;
+    padding: 0 36px 0 0;
+    position: relative;
+    border: 2px outset rgb(239, 240, 241);
+}
+
+.name {
+    font-size: 13px;
+    text-align: center;
+    margin: 0;
+}
+
+.hp {
+    font-size: 13px;
+    margin: 0;
+    float: right;
+    bottom: 0;
+    /* left: 172px; */
+    right: 1px;
+}
+
+.portrait, .hp {
+    position: absolute;
+}
+
+.portrait {
+    left: 142px;
+}
+
+button {
+    background-image: none;
+    border: 1px solid black;
+    border-right: 0;
+    height: 27px;
+    width: 47px;
+}
+
+button:last-child {
+    border-right: 1px solid black;
+}
