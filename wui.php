@@ -36,16 +36,14 @@ require_once('./BlobDB.php');
         <form action="wui.php" method="post">
             <?php foreach($engine->getWorldState() as $i => $blob_hp):?>
             <fieldset class="blob-panel">
-                <p class="hp">
-                    <?php echo $blob_hp;?>
-                </p>
-                <img class="portrait" width="25" height="25" src="src/slime25.png" />
-                <p class="name">
-                    <?php echo "name ".$i; ?>
-                </p><!--
-                --><button name="heal" value="<?php echo $i; ?>">heal</button><!--
-                --><button name="kick" value="<?php echo $i; ?>">kick</button><!--
-                --><button name="look" value="<?php echo $i; ?>">look</button>
+                <button name="heal" value="<?php echo $i; ?>">
+                    <span class="name">
+                        <?php echo "name ".$i; ?>
+                    </span>
+                    <span class="hp">
+                        <?php echo $blob_hp;?>
+                    </span>
+                </button>
             </fieldset>
             <?php endforeach;?>
             <fieldset class="new-blob-button">

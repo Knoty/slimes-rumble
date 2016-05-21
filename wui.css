@@ -1,7 +1,7 @@
 .blob-panel {
     width: 141px;
     height: 43px;
-    padding: 0 36px 0 0;
+    padding: 0 0 0 0;
     position: relative;
     border: 2px outset rgb(239, 240, 241);
 }
@@ -21,22 +21,13 @@
     right: 1px;
 }
 
-.portrait, .hp {
+.hp {
     position: absolute;
-}
-
-.portrait {
-    left: 142px;
 }
 
 button {
     background-image: none;
     border: 1px solid black;
-    border-right: 0;
-    height: 27px;
-    width: 47px;
-}
-
-button:last-child {
-    border-right: 1px solid black;
+    height: 100%;
+    width: 100%;
 }
