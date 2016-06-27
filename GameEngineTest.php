@@ -51,6 +51,51 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $this->assertEquals($hp_diff, $this->engine->lastModify());
     }
 
+    function DamageAmounts()
+    {
+        return [
+            [0],
+            [1],
+            [3],
+            [5]
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider DamageAmounts
+     * @param $damage_amount
+     */
+    function kickReducedHpAmount($damage_amount)
+    {
+        $generator = $this->getMock('DamageAmountGenerator');
+        $generator
+            ->method('getDamageAmount')
+            ->willReturn($damage_amount);
+
+        $blob = $this->engine->create();
+        $hp_original = $this->engine->look($blob);
+        $this->engine->setDamageAmountGenerator($generator);
+
+        $this->engine->kick($blob);
+
+        $hp_difference = $hp_original - $this->engine->look($blob);
+        $this->assertEquals($damage_amount, $hp_difference);
+    }
+
+    /** @test */
+    function kickAsksDamageAmountGenerator()
+    {
+        $generator = $this->getMock('DamageAmountGenerator');
+        $generator
+            ->expects($this->once())
+            ->method('getDamageAmount');
+
+        $blob = $this->engine->create();
+        $this->engine->setDamageAmountGenerator($generator);
+        $this->engine->kick($blob);
+    }
+
     /** @test */
     function kickBlobCheckMaxArguments()
     {
