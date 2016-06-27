@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<phpunit
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        strict="false">
+
+    <testsuites>
+        <testsuite name="Unit tests">
+            <file>BlobDBTest.php</file>
+            <file>GameEngineTest.php</file>
+        </testsuite>
+    </testsuites>
+
+</phpunit>
