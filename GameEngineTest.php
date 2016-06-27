@@ -36,8 +36,8 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
     {
         $blob = $this->engine->create();
         $this->engine->kick($blob);
-        $this->assertGreaterThanOrEqual(15 - $this->engine->last_modify(), $this->engine->look($blob));
-        $this->assertLessThanOrEqual(26 - $this->engine->last_modify(), $this->engine->look($blob));
+        $this->assertGreaterThanOrEqual(15 - $this->engine->lastModify(), $this->engine->look($blob));
+        $this->assertLessThanOrEqual(26 - $this->engine->lastModify(), $this->engine->look($blob));
     }
 
     /** @test */
@@ -48,7 +48,7 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $this->engine->kick($blob);
         $result_hp = $this->engine->look($blob);
         $hp_diff = $start_hp - $result_hp;
-        $this->assertEquals($hp_diff, $this->engine->last_modify());
+        $this->assertEquals($hp_diff, $this->engine->lastModify());
     }
 
     /** @test */
@@ -121,14 +121,14 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $this->markTestIncomplete('see FIXME comment on my definition');
         $blob = $this->engine->create();
         $this->engine->heal($blob);
-        $this->assertEquals(0, $this->engine->last_modify());
+        $this->assertEquals(0, $this->engine->lastModify());
     }
 
     /** @test */
     function lastModifyCreationTest()
     {
         $this->engine->create();
-        $this->assertEquals(0, $this->engine->last_modify());
+        $this->assertEquals(0, $this->engine->lastModify());
     }
 
     /** @test */

@@ -28,7 +28,7 @@ class GameEngine
 		$this->db->modifyBlob($blob_number, $this->hp_change);
 	}
 
-	function last_modify()
+	function lastModify()
 	{
 		return abs($this->hp_change);
 	}
