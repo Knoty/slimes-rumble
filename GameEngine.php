@@ -1,15 +1,34 @@
 <?php
 
+require_once ('./RandomDamageAmountGenerator.php');
+
 class GameEngine
 {
+	public $hp_change;
+
 	/** @var BlobDB */
 	private $db;
 
-	public $hp_change;
+	/** @var DamageAmountGenerator */
+	private $damage_amount_generator;
 
 	function setDB($db)
 	{
 		$this->db = $db;
+	}
+
+	function setDamageAmountGenerator($generator)
+	{
+		$this->damage_amount_generator = $generator;
+	}
+
+	/** @return DamageAmountGenerator */
+	private function getDamageAmountGenerator()
+	{
+		if ($this->damage_amount_generator == null)
+			$this->damage_amount_generator = new RandomDamageAmountGenerator();
+
+		return $this->damage_amount_generator;
 	}
 
 	function create()
@@ -24,8 +43,14 @@ class GameEngine
 
 	function kick($blob_number)
 	{
-		$this->hp_change = -mt_rand(1, 11);
+		$this->hp_change = -$this->getDamageAmount();
 		$this->db->modifyBlob($blob_number, $this->hp_change);
+	}
+
+	private function getDamageAmount()
+	{
+		$generator = $this->getDamageAmountGenerator();
+		return $generator->getDamageAmount();
 	}
 
 	function lastModify()
@@ -62,4 +87,6 @@ class GameEngine
 	{
 		return $this->db->massLook();
 	}
+
+
 }
