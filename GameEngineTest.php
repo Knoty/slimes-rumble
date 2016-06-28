@@ -179,11 +179,11 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
     /** @test */
     function saveWorldStatus()
     {
+        $test_world_state = 'test_state.db';
         $this->engine->create();
-
-        $this->engine->save();
+        $this->engine->save($test_world_state);
         $second_engine = new GameEngine();
-        $second_engine->restore();
+        $second_engine->restore($test_world_state);
 
         $this->assertEquals($this->engine->getWorldState(), $second_engine->getWorldState());
     }

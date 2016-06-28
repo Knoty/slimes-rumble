@@ -64,14 +64,13 @@ class GameEngine
 		$this->db->modifyBlob($blob_number, $this->hp_change);
 	}
 
-	function save()
+	function save($filename = 'state.db')
 	{
-        file_put_contents("state.db", json_encode($this->db->massLook()));
+        file_put_contents($filename, json_encode($this->db->massLook()));
 	}
 
-	function restore()
+	function restore($filename = "state.db")
 	{
-		$filename = "state.db";
 		$restore_raw_data = file_get_contents($filename);
 		$restore_data = json_decode($restore_raw_data);
 		$db = new BlobDB();
