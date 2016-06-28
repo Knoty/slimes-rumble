@@ -84,6 +84,4 @@ class GameEngine
 	{
 		return $this->db->massLook();
 	}
-
-
 }
