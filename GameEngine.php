@@ -1,6 +1,7 @@
 <?php
 
-require_once ('./RandomDamageAmountGenerator.php');
+require_once('./RandomDamageAmountGenerator.php');
+require_once('./BlobDB.php');
 
 class GameEngine
 {
@@ -49,8 +50,7 @@ class GameEngine
 
 	private function getDamageAmount()
 	{
-		$generator = $this->getDamageAmountGenerator();
-		return $generator->getDamageAmount();
+		return $this->getDamageAmountGenerator()->getDamageAmount();
 	}
 
 	function lastModify()
@@ -70,6 +70,7 @@ class GameEngine
 		$filename = "state.db";
 		$file = fopen($filename, "w");
 		fwrite($file, json_encode($data));
+        fclose($file);
 	}
 
 	function restore()
