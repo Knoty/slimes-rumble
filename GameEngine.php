@@ -66,11 +66,7 @@ class GameEngine
 
 	function save()
 	{
-		$data = $this->db->massLook();
-		$filename = "state.db";
-		$file = fopen($filename, "w");
-		fwrite($file, json_encode($data));
-        fclose($file);
+        file_put_contents("state.db", json_encode($this->db->massLook()));
 	}
 
 	function restore()
