@@ -58,4 +58,27 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
         $db->createBlob(15);
         $this->assertEquals([20, 15], $db->massLook());
     }
+
+    /**
+     * throw exception & defence programming try
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $blob_number must be integer
+     */
+    function throwExceptionOnModifyBlobWhenInvalidFirstArgument()
+    {
+        $db = new BlobDB();
+        $db->modifyBlob([], 1);
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage $hp_change must be integer
+     */
+    function throwExceptionOnModifyBlobWhenInvalidSecondArgument()
+    {
+        $db = new BlobDB();
+        $db->modifyBlob(2, 'abc');
+    }
 }

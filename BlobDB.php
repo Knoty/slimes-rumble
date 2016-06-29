@@ -12,6 +12,10 @@ class BlobDB
 
     public function modifyBlob($blob_number, $hp_change)
     {
+        if(!is_numeric($blob_number))
+            throw new InvalidArgumentException('$blob_number must be integer');
+        if(!is_numeric($hp_change))
+            throw new InvalidArgumentException('$hp_change must be integer');
         $this->blob_db[$blob_number] += $hp_change;
     }
 
