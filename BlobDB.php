@@ -14,8 +14,13 @@ class BlobDB
     {
         if(!is_numeric($blob_number))
             throw new InvalidArgumentException('$blob_number must be integer');
+
         if(!is_numeric($hp_change))
             throw new InvalidArgumentException('$hp_change must be integer');
+
+        if(!array_key_exists($blob_number, $this->blob_db))
+            throw new LogicException('no such blob:' . $blob_number);
+
         $this->blob_db[$blob_number] += $hp_change;
     }
 

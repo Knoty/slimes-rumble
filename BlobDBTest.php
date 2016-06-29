@@ -81,4 +81,15 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
         $db = new BlobDB();
         $db->modifyBlob(2, 'abc');
     }
+
+    /**
+     * @test
+     * @expectedException LogicException
+     * @expectedExceptionMessage no such blob:99
+     */
+    function test()
+    {
+        $db = new BlobDB();
+        $db->modifyBlob(99, 1);
+    }
 }
