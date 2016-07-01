@@ -19,9 +19,8 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
     function existingOfCreatedBlob()
     {
         $blob = $this->engine->create();
-        $this->assertGreaterThan(14, $this->engine->look($blob)); // FIXME: в таком виде этот тест не отличается от следующего.
-    }                                              // Если мы проверяем только лишь то, что после `create()` блоб вообще существует
-                                                   // (самую базовую функциональность), то достаточно `assertNotNull()`.
+        $this->assertNotNull($this->engine->look($blob));
+    }
 
     /** @test */
     function startHpWithinADesignatedInterval()
@@ -123,13 +122,15 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
     function healingBlob()
     {
         $blob = $this->engine->create();
+        $start_hp = $this->engine->look($blob);
         $this->engine->heal($blob);
-        $this->assertGreaterThan(15, $this->engine->look($blob)); // FIXME: так мы привязываем этот тест к диапазону жизней, прописанному в методе `create()`
-        $this->assertLessThan(38, $this->engine->look($blob));     // на самом деле мы хотим узнать, что после вызова `heal()` у блоба больше жизней, чем сразу после `create()`
-    }                                              // То есть, этот тест должен выглядеть так, как `kickBlobCheckDamage()`
+        $result_hp = $this->engine->look($blob);
+        $hp_diff = $result_hp - $start_hp;
+        $this->assertEquals($hp_diff, $this->engine->lastModify());
+    }
 
     /** @test
-     * тест старого дизайна, в новом должен проваливаться
+     *
      */
     function createTwoBlobsHealingOneAndCompareThey()
     {
@@ -137,12 +138,11 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $blob2 = $this->engine->create();
         $i = 0;
         $times_to_run = 11;
-        while ($i++ < $times_to_run) // FIXME: можно и так, но разве не достаточно было вызвать heal всего один раз в этом тесте?
+        while ($i++ < $times_to_run) // есть шанс на хил по 1хп 11 раз подряд
         {
             $this->engine->heal($blob2);
         }
         $this->assertGreaterThan($this->engine->look($blob1), $this->engine->look($blob2));
-        $this->assertLessThan($this->engine->look($blob2), $this->engine->look($blob1)); //FIXME: подразумевается, что мы доверяем тому, что `assertGreaterThan()` обратен `assertLessThan`.
     }
 
     /** @test */
