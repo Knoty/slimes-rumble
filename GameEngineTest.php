@@ -1,7 +1,8 @@
 <?php
 
-require_once('./GameEngine.php');
-require_once('./BlobDB.php');
+require_once ('./GameEngine.php');
+require_once ('./BlobDB.php');
+require_once ('./Blob.php');
 
 class GameEngineTest extends PHPUnit_Framework_Testcase
 {
@@ -129,9 +130,7 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $this->assertEquals($hp_diff, $this->engine->lastModify());
     }
 
-    /** @test
-     *
-     */
+    /** @test */
     function createTwoBlobsHealingOneAndCompareThey()
     {
         $blob1 = $this->engine->create();
@@ -191,7 +190,7 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
     /** @test */
     function emptyWorldState()
     {
-        $this->assertEquals($this->engine->getWorldState(), []);
+        $this->assertEquals([], $this->engine->getWorldState());
     }
 
     /** @test */
@@ -208,4 +207,22 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $this->engine->create();
         $this->assertCount(2, $this->engine->getWorldState());
     }
+
+    /** @test */
+    function fullDataOnEmptyWorld()
+    {
+        $this->assertEquals([], $this->engine->getFullData());
+    }
+
+    /** @test */
+    function fullDataOnOneBlob()
+    {
+        $this->engine->create();
+        $fullData = $this->engine->getFullData();
+        $this->assertNotEquals([], $fullData);
+        $this->assertInternalType("array", $fullData);
+        $this->assertInstanceOf("Blob", $fullData[0]);
+    }
+
+
 }

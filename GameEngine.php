@@ -1,7 +1,8 @@
 <?php
 
-require_once('./RandomDamageAmountGenerator.php');
-require_once('./BlobDB.php');
+require_once ('./RandomDamageAmountGenerator.php');
+require_once ('./BlobDB.php');
+require_once ('./Blob.php');
 
 class GameEngine
 {
@@ -82,5 +83,13 @@ class GameEngine
 	function getWorldState()
 	{
 		return $this->db->massLook();
+	}
+
+	public function getFullData()
+	{
+		if ($this->db->massLook() != [])
+			return [new Blob('name', 10)];
+
+		return [];
 	}
 }
