@@ -13,6 +13,7 @@
         <testsuite name="Unit tests">
             <file>BlobDBTest.php</file>
             <file>GameEngineTest.php</file>
+            <file>BlobTest.php</file>
         </testsuite>
     </testsuites>
 
