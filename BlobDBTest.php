@@ -4,12 +4,25 @@ require_once('./BlobDB.php');
 
 class BlobDBTest extends PHPUnit_Framework_TestCase
 {
+    /** @var BlobDB */
+    private $db;
+    
+    function setUp ()
+    {
+        $this->db = new BlobDB();
+    }
+    
+    /** @test */
+    function createDefaultName()
+    {
+        
+    }
+    
     /** @test */
     function returnSameHpWhichWereSaved()
     {
-        $db = new BlobDB();
-        $blob_number = $db->createBlob(13);
-        list(, $hp) = $db->lookBlob($blob_number);
+        $blob_number = $this->db->createBlob(13);
+        list(, $hp) = $this->db->lookBlob($blob_number);
         $this->assertEquals(13, $hp);
     }
 
@@ -30,35 +43,31 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
      */
     function checkHpChange($hp_change, $expected_hp)
     {
-        $db = new BlobDB();
-        $blob_number = $db->createBlob(20);
-        $db->modifyBlob($blob_number, $hp_change);
-        list(, $hp) = $db->lookBlob($blob_number);
+        $blob_number = $this->db->createBlob(20);
+        $this->db->modifyBlob($blob_number, $hp_change);
+        list(, $hp) = $this->db->lookBlob($blob_number);
         $this->assertEquals($expected_hp, $hp);
     }
 
     /** @test */
     function massLookToEmptyWorld()
     {
-        $db = new BlobDB();
-        $this->assertEquals([], $db->massLook());
+        $this->assertEquals([], $this->db->massLook());
     }
 
     /** @test */
     function massLookToOneCreatedBlob()
     {
-        $db = new BlobDB();
-        $db->createBlob(20);
-        $this->assertEquals([20], $db->massLook());
+        $this->db->createBlob(20);
+        $this->assertEquals([20], $this->db->massLook());
     }
 
     /** @test */
     function massLookToTwoNMoreBlobs()
     {
-        $db = new BlobDB();
-        $db->createBlob(20);
-        $db->createBlob(15);
-        $this->assertEquals([20, 15], $db->massLook());
+        $this->db->createBlob(20);
+        $this->db->createBlob(15);
+        $this->assertEquals([20, 15], $this->db->massLook());
     }
 
     /**
@@ -69,8 +78,7 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
      */
     function throwExceptionOnModifyBlobWhenInvalidFirstArgument()
     {
-        $db = new BlobDB();
-        $db->modifyBlob([], 1);
+        $this->db->modifyBlob([], 1);
     }
 
     /**
@@ -80,8 +88,7 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
      */
     function throwExceptionOnModifyBlobWhenInvalidSecondArgument()
     {
-        $db = new BlobDB();
-        $db->modifyBlob(2, 'abc');
+        $this->db->modifyBlob(2, 'abc');
     }
 
     /**
@@ -91,15 +98,13 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
      */
     function throwExceptionOnModifyNonexistentBlob()
     {
-        $db = new BlobDB();
-        $db->modifyBlob(99, 1);
+        $this->db->modifyBlob(99, 1);
     }
 
     /** @test */
     function lookBlobReturnsBlobName()
     {
-        $db = new BlobDB();
-        $blob = $db->createBlob(10, 'testname');
-        $this->assertEquals('testname', $db->lookBlob($blob)[0]);
+        $blob = $this->db->createBlob(10, 'testname');
+        $this->assertEquals('testname', $this->db->lookBlob($blob)[0]);
     }
 }
