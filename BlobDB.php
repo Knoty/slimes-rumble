@@ -27,7 +27,10 @@ class BlobDB
 
     public function lookBlob($blob_number)
     {
-        return $this->blob_db[$blob_number];
+        return [
+            'name',
+            $this->blob_db[$blob_number]
+        ];
     }
 
     public function massLook()

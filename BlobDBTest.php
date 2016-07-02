@@ -9,7 +9,8 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
     {
         $db = new BlobDB();
         $blob_number = $db->createBlob(13);
-        $this->assertEquals(13, $db->lookBlob($blob_number));
+        list(, $hp) = $db->lookBlob($blob_number);
+        $this->assertEquals(13, $hp);
     }
 
     function hpChanges()
@@ -32,7 +33,8 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
         $db = new BlobDB();
         $blob_number = $db->createBlob(20);
         $db->modifyBlob($blob_number, $hp_change);
-        $this->assertEquals($expected_hp, $db->lookBlob($blob_number));
+        list(, $hp) = $db->lookBlob($blob_number);
+        $this->assertEquals($expected_hp, $hp);
     }
 
     /** @test */

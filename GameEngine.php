@@ -40,7 +40,8 @@ class GameEngine
 
 	function look($blob_number)
 	{
-		return $this->db->lookBlob($blob_number);
+		list(, $hp) = $this->db->lookBlob($blob_number);
+		return $hp;
 	}
 
 	function kick($blob_number)
