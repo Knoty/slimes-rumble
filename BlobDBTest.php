@@ -15,7 +15,8 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
     /** @test */
     function createDefaultName()
     {
-        
+        $blob_number = $this->db->createBlob(10);
+        $this->assertEquals('name', $this->db->lookBlob($blob_number)[0]);
     }
     
     /** @test */
@@ -104,7 +105,7 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
     /** @test */
     function lookBlobReturnsBlobName()
     {
-        $blob = $this->db->createBlob(10, 'testname');
-        $this->assertEquals('testname', $this->db->lookBlob($blob)[0]);
+        $blob_number = $this->db->createBlob(10, 'testname');
+        $this->assertEquals('testname', $this->db->lookBlob($blob_number)[0]);
     }
 }
