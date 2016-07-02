@@ -27,8 +27,8 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
     function startHpWithinADesignatedInterval()
     {
         $blob = $this->engine->create();
-        $this->assertGreaterThan(14, $this->engine->look($blob));
-        $this->assertLessThan(27, $this->engine->look($blob));
+        $this->assertGreaterThan(14, $this->engine->look($blob)->getHP());
+        $this->assertLessThan(27, $this->engine->look($blob)->getHP());
     }
 
     /** @test */
@@ -36,17 +36,17 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
     {
         $blob = $this->engine->create();
         $this->engine->kick($blob);
-        $this->assertGreaterThanOrEqual(15 - $this->engine->lastModify(), $this->engine->look($blob));
-        $this->assertLessThanOrEqual(26 - $this->engine->lastModify(), $this->engine->look($blob));
+        $this->assertGreaterThanOrEqual(15 - $this->engine->lastModify(), $this->engine->look($blob)->getHP());
+        $this->assertLessThanOrEqual(26 - $this->engine->lastModify(), $this->engine->look($blob)->getHP());
     }
 
     /** @test */
     function kickBlobCheckDamage() // Хороший, обобщённый тест, который проверяет основную функциональность `kick()`
     {
         $blob = $this->engine->create();
-        $start_hp = $this->engine->look($blob);
+        $start_hp = $this->engine->look($blob)->getHP();
         $this->engine->kick($blob);
-        $result_hp = $this->engine->look($blob);
+        $result_hp = $this->engine->look($blob)->getHP();
         $hp_diff = $start_hp - $result_hp;
         $this->assertEquals($hp_diff, $this->engine->lastModify());
     }
@@ -74,12 +74,12 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
             ->willReturn($damage_amount);
 
         $blob = $this->engine->create();
-        $hp_original = $this->engine->look($blob);
+        $hp_original = $this->engine->look($blob)->getHP();
         $this->engine->setDamageAmountGenerator($generator);
 
         $this->engine->kick($blob);
 
-        $hp_difference = $hp_original - $this->engine->look($blob);
+        $hp_difference = $hp_original - $this->engine->look($blob)->getHP();
         $this->assertEquals($damage_amount, $hp_difference);
     }
 
@@ -101,8 +101,8 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
     {
         $blob = $this->engine->create();
         $this->engine->kick($blob);
-        $this->assertGreaterThan(3, $this->engine->look($blob));
-        $this->assertLessThan(26, $this->engine->look($blob));
+        $this->assertGreaterThan(3, $this->engine->look($blob)->getHP());
+        $this->assertLessThan(26, $this->engine->look($blob)->getHP());
     }
 
     /** @test */
@@ -115,17 +115,17 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         {
             $this->engine->kick($blob);
         }
-        $this->assertGreaterThanOrEqual(-117, $this->engine->look($blob));
-        $this->assertLessThanOrEqual(15, $this->engine->look($blob));
+        $this->assertGreaterThanOrEqual(-117, $this->engine->look($blob)->getHP());
+        $this->assertLessThanOrEqual(15, $this->engine->look($blob)->getHP());
     }
 
     /** @test */
     function healingBlob()
     {
         $blob = $this->engine->create();
-        $start_hp = $this->engine->look($blob);
+        $start_hp = $this->engine->look($blob)->getHP();
         $this->engine->heal($blob);
-        $result_hp = $this->engine->look($blob);
+        $result_hp = $this->engine->look($blob)->getHP();
         $hp_diff = $result_hp - $start_hp;
         $this->assertEquals($hp_diff, $this->engine->lastModify());
     }
@@ -141,7 +141,7 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         {
             $this->engine->heal($blob2);
         }
-        $this->assertGreaterThan($this->engine->look($blob1), $this->engine->look($blob2));
+        $this->assertGreaterThan($this->engine->look($blob1)->getHP(), $this->engine->look($blob2)->getHP());
     }
 
     /** @test */
@@ -151,10 +151,10 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $blob2 = $this->engine->create();
         $this->engine->kick($blob1);
         $this->engine->kick($blob2);
-        $this->assertGreaterThan(3, $this->engine->look($blob1));
-        $this->assertLessThan(26, $this->engine->look($blob1));
-        $this->assertGreaterThan(3, $this->engine->look($blob2));
-        $this->assertLessThan(26, $this->engine->look($blob2));
+        $this->assertGreaterThan(3, $this->engine->look($blob1)->getHP());
+        $this->assertLessThan(26, $this->engine->look($blob1)->getHP());
+        $this->assertGreaterThan(3, $this->engine->look($blob2)->getHP());
+        $this->assertLessThan(26, $this->engine->look($blob2)->getHP());
     }
 
     /**
