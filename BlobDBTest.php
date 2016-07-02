@@ -94,4 +94,12 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
         $db = new BlobDB();
         $db->modifyBlob(99, 1);
     }
+
+    /** @test */
+    function lookBlobReturnsBlobName()
+    {
+        $db = new BlobDB();
+        $blob = $db->createBlob(10, 'testname');
+        $this->assertEquals('testname', $db->lookBlob($blob)[0]);
+    }
 }

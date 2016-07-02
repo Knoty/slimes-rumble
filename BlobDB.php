@@ -2,10 +2,12 @@
 
 class BlobDB
 {
+    private $blob_name_db = [];
     private $blob_db = [];
 
-    public function createBlob($blob_hp)
+    public function createBlob($blob_hp, $blob_name = 'name')
     {
+        array_push($this->blob_name_db, $blob_name);
         $new_count = array_push($this->blob_db, $blob_hp);
         return $new_count - 1;
     }
@@ -28,7 +30,7 @@ class BlobDB
     public function lookBlob($blob_number)
     {
         return [
-            'name',
+            $this->blob_name_db[$blob_number],
             $this->blob_db[$blob_number]
         ];
     }
@@ -37,4 +39,9 @@ class BlobDB
     {
         return $this->blob_db;
     }
+
+//    public function massLookNames()
+//    {
+//        return $this->blob_name_db;
+//    }
 }
