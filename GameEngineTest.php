@@ -224,5 +224,29 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $this->assertInstanceOf("Blob", $fullData[0]);
     }
 
+    /** @test */
+    function fullDataReturnsAmountOfCreatedBlobs()
+    {
+        $this->engine->create();
+        $this->engine->create();
+        $this->engine->create();
+        $blobs = $this->engine->getFullData();
+        $this->assertCount(3, $blobs);
+    }
 
+    /** @test
+     * here we try to check that foreach can be use
+     */
+    function fullDataReturnsFullRealData()
+    {
+        $this->engine->create();
+        $this->engine->create();
+        $this->engine->create();
+        $blobs = $this->engine->getFullData();
+        foreach ($blobs as $blob)
+        {
+            $this->assertGreaterThan(0, strlen($blob->getName()));
+            $this->assertGreaterThan(0, $blob->getHP());
+        };
+    }
 }

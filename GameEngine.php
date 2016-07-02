@@ -85,11 +85,19 @@ class GameEngine
 		return $this->db->massLook();
 	}
 
+	/** @return Blob[] */
 	public function getFullData()
 	{
-		if ($this->db->massLook() != [])
-			return [new Blob('name', 10)];
+		$raw = $this->db->massLook();
+		if ($raw == [])
+			return [];
 
-		return [];
+		$blobs = [];
+		foreach ($raw as $record)
+		{
+			$blobs[] = new Blob('name', $record);
+		}
+
+		return $blobs;
 	}
 }
