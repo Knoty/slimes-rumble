@@ -3,6 +3,7 @@
 require_once ('./RandomDamageAmountGenerator.php');
 require_once ('./BlobDB.php');
 require_once ('./Blob.php');
+require_once ('./NonRandomNameGenerator.php');
 
 class GameEngine
 {
@@ -14,6 +15,8 @@ class GameEngine
 	/** @var DamageAmountGenerator */
 	private $damage_amount_generator;
 
+	private $name_generator;
+
 	function setDB($db)
 	{
 		$this->db = $db;
@@ -22,6 +25,11 @@ class GameEngine
 	function setDamageAmountGenerator($generator)
 	{
 		$this->damage_amount_generator = $generator;
+	}
+
+	function setNameGenerator($generator)
+	{
+		$this->name_generator = $generator;
 	}
 
 	/** @return DamageAmountGenerator */
@@ -35,7 +43,8 @@ class GameEngine
 
 	function create()
 	{
-		return $this->db->createBlob(mt_rand(15, 26));
+		$blob_name = $this->makeBlobName();
+		return $this->db->createBlob(mt_rand(15, 26), $blob_name);
 	}
 
 	function look($blob_number)
@@ -102,5 +111,21 @@ class GameEngine
 		}
 
 		return $blobs;
+	}
+
+	/** @return string */
+	private function makeBlobName()
+	{
+		$name_generator = $this->getNameGenerator();
+		return $name_generator->getName();
+	}
+
+	/** @return NonRandomNameGenerator */
+	private function getNameGenerator()
+	{
+		if ($this->name_generator == null)
+			$this->name_generator = new NonRandomNameGenerator();
+
+		return $this->name_generator;
 	}
 }
