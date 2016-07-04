@@ -261,4 +261,12 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $name = $blob->getName();
         $this->assertEquals('testname', $name);
     }
+
+    /** @test */
+    function created2BlobsHaveDifferentNames()
+    {
+        $blob1 = $this->engine->create();
+        $blob2 = $this->engine->create();
+        $this->assertNotEquals($this->engine->look($blob1)->getName(), $this->engine->look($blob2)->getName());
+    }
 }

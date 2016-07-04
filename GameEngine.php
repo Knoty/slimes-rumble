@@ -4,6 +4,7 @@ require_once ('./RandomDamageAmountGenerator.php');
 require_once ('./BlobDB.php');
 require_once ('./Blob.php');
 require_once ('./NonRandomNameGenerator.php');
+require_once ('./RandomNameGenerator.php');
 
 class GameEngine
 {
@@ -124,7 +125,7 @@ class GameEngine
 	private function getNameGenerator()
 	{
 		if ($this->name_generator == null)
-			$this->name_generator = new NonRandomNameGenerator();
+			$this->name_generator = new RandomNameGenerator();
 
 		return $this->name_generator;
 	}
