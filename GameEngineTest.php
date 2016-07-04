@@ -249,4 +249,16 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
             $this->assertGreaterThan(0, $blob->getHP());
         };
     }
+
+    /** @test */
+    function fullDataDisplaysNames()
+    {
+        $db = new BlobDB();
+        $db->createBlob(10, 'testname');
+        $this->engine->setDB($db);
+
+        $blob = $this->engine->getFullData()[0];
+        $name = $blob->getName();
+        $this->assertEquals('testname', $name);
+    }
 }

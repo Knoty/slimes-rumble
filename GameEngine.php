@@ -93,10 +93,12 @@ class GameEngine
 		if ($raw == [])
 			return [];
 
+		$rawnames = $this->db->massLookNames();
+
 		$blobs = [];
-		foreach ($raw as $record)
+		foreach ($raw as $key=>$hp)
 		{
-			$blobs[] = new Blob('name', $record);
+			$blobs[] = new Blob($rawnames[$key], $hp);
 		}
 
 		return $blobs;
