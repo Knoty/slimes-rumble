@@ -108,4 +108,26 @@ class BlobDBTest extends PHPUnit_Framework_TestCase
         $blob_number = $this->db->createBlob(10, 'testname');
         $this->assertEquals('testname', $this->db->lookBlob($blob_number)[0]);
     }
+
+    /** @test */
+    function massLookNamesToEmptyWorld()
+    {
+        $this->assertEquals([], $this->db->massLookNames());
+    }
+
+    /** @test */
+    function massLookNamesToOneCreatedBlob()
+    {
+        $this->db->createBlob(20, 'testname');
+        $this->assertEquals(['testname'], $this->db->massLookNames());
+    }
+
+    /** @test */
+    function massLookNamesToTwoNMoreBlobs()
+    {
+        $this->db->createBlob(20);
+        $this->db->createBlob(15, 'testname');
+        $this->db->createBlob(10, 'testname2');
+        $this->assertEquals(['name', 'testname', 'testname2'], $this->db->massLookNames());
+    }
 }

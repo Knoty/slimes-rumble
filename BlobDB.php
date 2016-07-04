@@ -40,8 +40,8 @@ class BlobDB
         return $this->blob_db;
     }
 
-//    public function massLookNames()
-//    {
-//        return $this->blob_name_db;
-//    }
+    public function massLookNames()
+    {
+        return $this->blob_name_db;
+    }
 }
