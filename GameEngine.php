@@ -78,19 +78,23 @@ class GameEngine
 
 	function save($filename = 'state.db')
 	{
-        file_put_contents($filename, json_encode($this->db->massLook()));
+		$hps = $this->db->massLook();
+		$names = $this->db->massLookNames();
+		$data = ['names' => $names, 'hps' => $hps];
+		file_put_contents($filename, json_encode($data));
 	}
 
 	function restore($filename = "state.db")
 	{
 		if(!file_exists($filename))
-			file_put_contents($filename, '[]');
+			file_put_contents($filename, '{"names":[], "hps":[]}');
 
 		$restore_raw_data = file_get_contents($filename);
 		$restore_data = json_decode($restore_raw_data);
+
 		$db = new BlobDB();
-		foreach($restore_data as $hp)
-			$db->createBlob($hp);
+		foreach($restore_data->hps as $i => $hp)
+			$db->createBlob($hp, $restore_data->names[$i]);
 		$this->db = $db;
 	}
 

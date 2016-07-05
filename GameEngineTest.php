@@ -277,6 +277,22 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $this->engine->restore('nonexistent');
     }
 
+    /** @test */
+    function saveSavesNames()
+    {
+        $db = new BlobDB();
+        $db->createBlob(10, 'SavedName');
+        $this->engine->setDB($db);
+        $this->engine->save('test_state.db');
+
+        $engine = new GameEngine();
+        $engine->restore('test_state.db');
+        $blobs = $engine->getFullData();
+
+        $this->assertCount(1, $blobs);
+        $this->assertEquals('SavedName', $blobs[0]->getName());
+    }
+
     function tearDown()
     {
         @unlink('nonexistent');
