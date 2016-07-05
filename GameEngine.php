@@ -83,6 +83,9 @@ class GameEngine
 
 	function restore($filename = "state.db")
 	{
+		if(!file_exists($filename))
+			file_put_contents($filename, '[]');
+
 		$restore_raw_data = file_get_contents($filename);
 		$restore_data = json_decode($restore_raw_data);
 		$db = new BlobDB();

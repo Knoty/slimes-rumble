@@ -34,14 +34,14 @@ require_once('./BlobDB.php');
         <pre>$_GET=<?php var_dump($_GET); ?></pre>
         <pre>$_POST=<?php var_dump($_POST); ?></pre>
         <form action="wui.php" method="post">
-            <?php foreach($engine->getWorldState() as $i => $blob_hp):?>
+            <?php foreach($engine->getFullData() as $i => $blob):?>
             <fieldset class="blob-panel">
                 <button name="heal" value="<?php echo $i; ?>">
                     <span class="name">
-                        <?php echo "name ".$i; ?>
+                        <?php echo $blob->getName(); ?>
                     </span>
                     <span class="hp">
-                        <?php echo $blob_hp;?>
+                        <?php echo $blob->getHP();?>
                     </span>
                 </button>
             </fieldset>

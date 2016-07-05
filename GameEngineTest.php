@@ -269,4 +269,16 @@ class GameEngineTest extends PHPUnit_Framework_Testcase
         $blob2 = $this->engine->create();
         $this->assertNotEquals($this->engine->look($blob1)->getName(), $this->engine->look($blob2)->getName());
     }
+
+    /** @test */
+    function restoreShouldNotBrakeNonexistentStateFile()
+    {
+        @unlink('nonexistent');
+        $this->engine->restore('nonexistent');
+    }
+
+    function tearDown()
+    {
+        @unlink('nonexistent');
+    }
 }
